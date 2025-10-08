@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- SE LEU ME DEVE O CUZIN RSRS-->
+
+    <title>Uma Pergunta Muito Importante 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e, #ffafbd);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            max-width: 90%;
+            position: relative;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        #btnYes {
+            background: linear-gradient(45deg, #ff4d6d, #ff8fa3);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
+        }
+
+        #btnNo {
+            background: linear-gradient(45deg, #6b7280, #9ca3af);
+            color: white;
+            box-shadow: 0 5px 15px rgba(107, 114, 128, 0.4);
+            position: relative;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        #btnYes:hover {
+            background: linear-gradient(45deg, #ff2b54, #ff758f);
+            transform: scale(1.1);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        #message {
+            margin-top: 30px;
+            font-size: 2em;
+            color: #ff4d6d;
+            font-weight: bold;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: #ff4d6d;
+            animation: float 3s ease-in infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Responsivo para mobile */
+        @media (max-width: 600px) {
+            h1 { font-size: 1.5em; }
+            .btn { padding: 12px 25px; font-size: 1.1em; }
+            #message { font-size: 1.5em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Nós vai dormir quando juntos? rsrs</h1>
+        
+        <div class="buttons">
+            <button class="btn" id="btnYes">Já estou indo 👀</button>
+            <button class="btn" id="btnNo">Nunca 😢</button>
+        </div>
+        
+        <div id="message" class="hidden"></div>
+    </div>
+
+    <div class="hearts" id="hearts"></div>
+
+    <script>
+        const btnYes = document.getElementById('btnYes');
+        const btnNo = document.getElementById('btnNo');
+        const message = document.getElementById('message');
+        const buttons = document.querySelector('.buttons');
+        const heartsContainer = document.getElementById('hearts');
+
+        // Função para criar corações
+        function createHearts() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = '👀';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
+                    heartsContainer.appendChild(heart);
+                    
+                    // Remove o coração após animação
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 3000);
+                }, i * 100);
+            }
+        }
+
+        // Quando o NÃO é clicado - O BOTÃO FUGE!
+        btnNo.addEventListener('click', function() {
+            // Faz o botão "NÃO" fugir para uma posição aleatória
+            const containerRect = buttons.getBoundingClientRect();
+            const maxX = containerRect.width - btnNo.offsetWidth;
+            const maxY = containerRect.height - btnNo.offsetHeight;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            btnNo.style.position = 'absolute';
+            btnNo.style.left = randomX + 'px';
+            btnNo.style.top = randomY + 'px';
+            
+            // Muda o texto para algo engraçado
+            const funnyTexts = [
+                "Tem certeza? 😭",
+                "Mentira, tu quer 😜",
+                "Olha o que você tá perdendo! 😢",
+                "Tô te esperando, viu?",
+                "Vai negar o inevitável? rs",
+                "Finge mais um pouco 😅",
+                "Por favor? 🙏",
+                "Nem vem disfarçar 😂"
+            ];
+            
+            const randomText = funnyTexts[Math.floor(Math.random() * funnyTexts.length)];
+            btnNo.textContent = randomText;
+        });
+
+        // Quando o SIM é clicado - CELEBRAÇÃO!
+        btnYes.addEventListener('click', function() {
+            // Esconde os botões
+            btnYes.style.display = 'none';
+            btnNo.style.display = 'none';
+            
+            // Mostra mensagem romântica
+            message.classList.remove('hidden');
+            message.innerHTML = "KKKKKK já arrumei a cama aqui <br> encosta vida";
+            
+            // Cria MUITOS corações
+            createHearts();
+            
+            // Toca um som comemorativo (vibração no celular)
+            if (navigator.vibrate) {
+                navigator.vibrate([100, 50, 100, 50, 100]);
+            }
+            
+            // Confetti effect simulado
+            setTimeout(createHearts, 500);
+            setTimeout(createHearts, 1000);
+        });
+
+        // Também faz o botão "NÃO" fugir quando o mouse passa por cima (em desktop)
+        btnNo.addEventListener('mouseover', function() {
+            if (window.innerWidth > 768) { // Só em desktop
+                const containerRect = buttons.getBoundingClientRect();
+                const maxX = containerRect.width - btnNo.offsetWidth;
+                const maxY = containerRect.height - btnNo.offsetHeight;
+                
+                const randomX = Math.random() * maxX;
+                const randomY = Math.random() * maxY;
+                
+                btnNo.style.position = 'absolute';
+                btnNo.style.left = randomX + 'px';
+                btnNo.style.top = randomY + 'px';
+            }
+        });
+    </script>
+</body>
+</html>
